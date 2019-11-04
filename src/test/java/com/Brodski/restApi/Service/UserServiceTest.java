@@ -16,13 +16,14 @@ class UserServiceTest {
 
     @BeforeEach
     void initUseCase() {
-        //userServiceTest = new UserService(userRepository);
+        userServiceTest = new UserService(userRepository);
     }
 
     @Test
     void getAllUsers() {
         System.out.println(userServiceTest.getAllUsers());
         System.out.println(userServiceTest.getTime());
+        System.out.println(userServiceTest.getServerPort());
     }
 
     @Test

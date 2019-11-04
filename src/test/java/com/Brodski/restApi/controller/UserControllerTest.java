@@ -21,6 +21,7 @@ class UserControllerTest {
     void index() {
         System.out.println(userServiceTest.getAllUsers());
         System.out.println(userServiceTest.getTime());
+        System.out.println(userServiceTest.getServerPort());
     }
 
     @Test
