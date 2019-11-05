@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.jws.soap.SOAPBinding;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -14,17 +13,7 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Value("${logging.level.root}")
-    private String serverPort;
-
-    @Value("${spring.data.mongodb.database}")
-    private String mongoDatabase;
-
-    @Value("${spring.data.mongodb.host}")
-    private String mongoHost;
-
-//    @Autowired
-//    private UserRepository userRepo;
+//    @Autowired private UserRepository userRepo;
     private final UserRepository userRepo;
 
     public UserService(UserRepository userRepository){
@@ -36,15 +25,11 @@ public class UserService {
     }
 
     public User createUser(String username ){
-        User u =userRepo.save(new User(username));
-        //return userRepo.save(new User(username));
-        return u;
+        return userRepo.save(new User(username));
     }
 
     public User createUser(User user ){
-        User u =userRepo.save(user);
-        //return userRepo.save(new User(username));
-        return u;
+        return userRepo.save(user);
     }
 
     public User getByUsername(String username){
@@ -56,12 +41,5 @@ public class UserService {
         LocalDateTime now = LocalDateTime.now();
         String s = dtf.format(now);
         return s;
-    }
-
-    public String getMongoDatabase(){
-        return this.mongoDatabase;
-    }
-    public String getMongoHost(){
-        return this.mongoHost;
     }
 }
