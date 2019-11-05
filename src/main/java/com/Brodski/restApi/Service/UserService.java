@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.jws.soap.SOAPBinding;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -31,7 +32,19 @@ public class UserService {
     }
 
     public User createUser(String username ){
-        return userRepo.save(new User(username));
+        User u =userRepo.save(new User(username));
+        //return userRepo.save(new User(username));
+        return u;
+    }
+
+    public User createUser(User user ){
+        User u =userRepo.save(user);
+        //return userRepo.save(new User(username));
+        return u;
+    }
+
+    public User getByUsername(String username){
+        return userRepo.findByUsername(username);
     }
 
     public String getTime(){
