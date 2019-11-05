@@ -25,7 +25,6 @@ class UserServiceTest {
     void getAllUsers() {
         System.out.println(userService.getAllUsers());
         System.out.println(userService.getTime());
-        System.out.println(userService.getServerPort());
     }
 
     @Test

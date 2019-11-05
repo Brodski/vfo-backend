@@ -17,8 +17,12 @@ public class UserService {
     @Value("${logging.level.root}")
     private String serverPort;
 
-    @Value("${spring.data.mongodb.uri}")
-    private String mongoUri;
+    @Value("${spring.data.mongodb.database}")
+    private String mongoDatabase;
+
+    @Value("${spring.data.mongodb.host}")
+    private String mongoHost;
+
 //    @Autowired
 //    private UserRepository userRepo;
     private final UserRepository userRepo;
@@ -54,7 +58,10 @@ public class UserService {
         return s;
     }
 
-    public String getServerPort(){
-        return this.mongoUri;
+    public String getMongoDatabase(){
+        return this.mongoDatabase;
+    }
+    public String getMongoHost(){
+        return this.mongoHost;
     }
 }
