@@ -34,7 +34,6 @@ class UserServiceTest {
         when(userRepository.save(user)).thenReturn(user);
 
         User savedUser = userService.createUser(user);
-        System.out.println(savedUser);
         assertEquals(user, savedUser);
     }
 

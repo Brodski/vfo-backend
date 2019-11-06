@@ -10,10 +10,6 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class AppProperties {
 
-
-    @Value("${logging.level.root}")
-    private String serverPort;
-
     @Value("${spring.data.mongodb.database}")
     private String mongoDatabase;
 
