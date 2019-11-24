@@ -9,6 +9,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -48,6 +49,14 @@ public class UserController {
  //       System.out.println(newUser);
 //        return userService.createUser(newUser);
 //    }
+
+    @PostMapping("/user/authorize")
+    public String  authorizeUser(@RequestBody String authcode) {
+        System.out.println("\nGOT IT! " + authcode);
+        System.out.println("\n");
+        return "SENDING IT!";
+
+    }
 
     @PostMapping(path = "/userDebug") //, consumes = "application/x-www-form-urlencoded") //consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE )
     public ResponseEntity<String> handleRequest (RequestEntity<String> requestEntity) {

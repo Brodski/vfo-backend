@@ -11,4 +11,8 @@ java -jar target/restApi-0.0.1-SNAPSHOT.jar
 mvn .\myfristspringboot\:run
 
 ###### Go to last commit
+Undo last commit but keep local changes:
+git reset --soft HEAD~1
+
+Go to last commit:
 git reset --hard HEAD
