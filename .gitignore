@@ -1,6 +1,8 @@
 
-src/main/java/com.Brodski.restApi/SecretKeys.java
-
+./src/main/java/com/Brodski/restApi/SecretKeys.java
+/src/main/java/com/Brodski/restApi/SecretKeys.java
+src/main/java/com/Brodski/restApi/*
+src/main/java/com/Brodski/restApi/SecretKeys.java
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
