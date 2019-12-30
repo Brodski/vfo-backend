@@ -10,6 +10,7 @@ public class User {
     @Id
     String id;
     public String username;
+    public String googleId;
 
     public User(){}
 

@@ -8,9 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends MongoRepository<User, String> { //Id is a string
     public User findByUsername(String username);
     //public List<User> findById(String Id);
-
-
-
-
-
+    public User findByGoogleId(String id);
 }
+
+

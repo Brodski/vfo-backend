@@ -1,6 +1,7 @@
 
 EASY RUN
 
+
 mvn spring-boot:run
 
 
@@ -16,6 +17,19 @@ git reset --hard HEAD
 
  -----------------------------------------
 
+Even though this google doc https://developers.google.com/identity/sign-in/web/reference#googleusergetid
+says "Do not use the Google IDs returned by getId() to communicate the currently signed
+in user to your backend server." Upon further examination, it is a mistake. B/c backend
+authentication is wasted time and computing when we actually just want the Id. Not autherization
+to get and fiddle with user data on backend.
+FURTHERMORE: This 2nd google docs says we can us .getId() https://developers.google.com/identity/sign-in/web/people
+
+
+
+
+
+
+-=----------------------------------
  show dbs
  show collections
  db.coolDudes.find().pretty()
@@ -110,31 +124,3 @@ git reset --hard HEAD
         "last_name" : "Chan",
         "role" : "live in peace with girlfriend"
 }
-
------------------
-
-Google dive
-	-sync files
-VS Code
-
-remote desktop tool
-	- team viewer
-	- chrome remote desktop
-	- vnc
-
-mecurial - like git
-
-grep
-rsync -data backup
-scp
-wget -fetch websites
-cron - automated tasks
-imagemagic - image processing
-
-BIG 3 FRAMEWORKS
-React
-Angular
-Vue
-
--react most popular
-

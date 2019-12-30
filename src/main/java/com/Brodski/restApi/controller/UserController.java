@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
@@ -43,17 +46,26 @@ public class UserController {
         return u;
     }
 
-    //DELETE THIS SHIT
-   // @PostMapping(path = "/actualCreate2")
-  //  public User actualCreate2(@RequestBody User newUser){
- //       System.out.println(newUser);
-//        return userService.createUser(newUser);
-//    }
-
-    @PostMapping("/user/authorize")
-    public String  authorizeUser(@RequestBody String authcode) {
-        System.out.println("\nGOT IT! " + authcode);
+    @PostMapping("/user/create")
+    public String createUser(@RequestBody String idToken) throws GeneralSecurityException, IOException {
+        System.out.println("\nGOT IT! " + idToken);
         System.out.println("\n");
+        User user = userService.getUser(idToken);
+        System.out.println("create user is null?");
+        System.out.println(user);
+        // if user is null
+        
+
+        return "SENDING IT!";
+    }
+
+
+    @PostMapping("/user/authenticate")
+    public String authenticateUser(@RequestBody String idToken) throws GeneralSecurityException, IOException {
+        System.out.println("\nGOT IT! " + idToken);
+        System.out.println("\n");
+        userService.getUser(idToken);
+
         return "SENDING IT!";
 
     }
