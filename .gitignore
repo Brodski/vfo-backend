@@ -1,8 +1,39 @@
+###
+### mvn spring-boot:run
+###
+### Removing Untracked Files https://linuxize.com/post/how-to-remove-untracked-files-in-git/
+###     (d = rm directories) (r = dry run, shows what will be deleted)
+###     git clean -d -n
+###
+### Undo last commit but keep local changes:
+###     git reset --soft HEAD~1
+###
+### Go to last commit:
+###     git reset --hard HEAD
+###
+###
+###
+###
 
+###
+###
 ./src/main/java/com/Brodski/restApi/SecretKeys.java
 /src/main/java/com/Brodski/restApi/SecretKeys.java
-src/main/java/com/Brodski/restApi/*
 src/main/java/com/Brodski/restApi/SecretKeys.java
+src/main/java/com/Brodski/restApi/SecretKeys*
+src/main/java/com/Brodski/restApi/Secret*
+
+
+.\src\main\java\com\Brodski\restApi\SecretKeyz.java
+\src\main\java\com\Brodski\restApi\SecretKeyz.java
+src\main\java\com\Brodski\restApi\SecretKeyz.java
+
+src/main/java/com/Brodski/restApi/SecretKeyz.java
+src/main/java/com/Brodski/restApi/SecretKeyz.java
+src/main/java/com/Brodski/restApi/SecretKeys.java
+SecretKeys.java
+
+
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar

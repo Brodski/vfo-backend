@@ -7,8 +7,6 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.gson.Gson;
 import org.json.JSONObject;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -17,18 +15,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
-//import com.Brodski.restApi.com.Brodski.restApi.SecretKeys.
+//import com.Brodski.restApi.com.Brodski.restApi.SecretKeyz.
 //import com.Brodski.restApi.SomeBullshit;
 //import static com.Brodski.restApi.
-import static com.Brodski.restApi.SecretKeys.CLIENT_ID;
-import static com.Brodski.restApi.SecretKeys.APIKEY;
+import static com.Brodski.restApi.SecretKeyz.CLIENT_ID;
+import static com.Brodski.restApi.SecretKeyz.APIKEY;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.json.JsonFactory;
 
 
 //TODO:
@@ -44,77 +40,66 @@ public class UserService {
         this.userRepo = userRepository;
     }
 
-    public List<User> getAllUsers(){
-        return userRepo.findAll();
+    public void loginUser(String id_JsonString) throws GeneralSecurityException, IOException {
+        String idtoken = processIdString(id_JsonString);
+        User user = validateIdToken(idtoken);
+        System.out.println("CREATE USER: validateIdToken");
+        System.out.println(user);
+        if (user != null){
+            System.out.println("CREATE USER: USER IS VALID");
+            //Check database
+            User userInDb = getByGoogleId(user.googleId);
+            System.out.println("User after database get");
+            System.out.println(userInDb);
+            if (userInDb == null){
+                System.out.println("CREATING NEW USER! (user != null) ");
+                userRepo.save(user);
+            }
+            else {
+                System.out.println("CREATE USER: USER ALREADY EXISTS!!");
+            }
+        }
+        return;
     }
 
-    public User createUser(String username ){
-        return userRepo.save(new User(username));
-    }
+    private String processIdString(String id_JsonString){
 
-    public User createUser(User user ){
-        return userRepo.save(user);
-    }
+        Gson gson = new Gson();
+        JSONObject obj = new JSONObject(id_JsonString);
+        String idTokenString = obj.getString("idtoken");
+        System.out.println("obj.getString(idtoken)");
+        System.out.println(obj.getString("idtoken"));
+        return idTokenString;
 
-    public User getByUsername(String username){
-        return userRepo.findByUsername(username);
-    }
-
-    public User getByGoogleId(String googleId){
-        return userRepo.findByGoogleId(googleId)   ;
-
-    }
-
-    public String getTime(){
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMM dd, HH:mm");
-        LocalDateTime now = LocalDateTime.now();
-        String s = dtf.format(now);
-        return s;
     }
 
     public User getUser(String id_JsonString) throws GeneralSecurityException, IOException {
-        User user = new User();
-        Gson gson = new Gson();
-        JSONObject obj = new JSONObject(id_JsonString);
-        System.out.println("obj.getString(idtoken)");
-        System.out.println(obj.getString("idtoken"));
-        String idTokenString = obj.getString("idtoken");
-
-        boolean isValid = validateIdToken(idTokenString);
-        System.out.println("isValid");
-        System.out.println(isValid);
-        if (isValid){
-            System.out.println("VALID");
+        User user = null;
+        String idtoken = processIdString(id_JsonString);
+        user = validateIdToken(idtoken);
+        System.out.println("isValid? " + (user != null));
+        if (user != null){
             user = getByGoogleId(id_JsonString);
-            System.out.println("google user");
-            System.out.println(user);
-        }
-        else {
-            System.out.println("NOT VALID");
         }
         return user;
-
-
-
     }
+
+
 
     // oauth library
     // GUIDE: https://developers.google.com/identity/sign-in/web/listeners
     // API: https://googleapis.dev/java/google-api-services-oauth2/latest/index.html
                 // jackson is better??? to research https://blog.overops.com/the-ultimate-json-library-json-simple-vs-gson-vs-jackson-vs-json/
                  //https://stackoverflow.com/questions/2591098/how-to-parse-json-in-java
-    private boolean validateIdToken(String idTokenString) throws GeneralSecurityException, IOException {
+    private User validateIdToken(String idTokenString) throws GeneralSecurityException, IOException {
         boolean isValid = false;
         System.out.println(APIKEY);
         System.out.println(CLIENT_ID);
-
+        User user = null;
         NetHttpTransport transport = GoogleNetHttpTransport.newTrustedTransport();
         JacksonFactory jacksonFactory = new JacksonFactory();
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jacksonFactory)
-                // Specify the CLIENT_ID of the app that accesses the backend:
                 .setAudience(Collections.singletonList(CLIENT_ID))
-                // Or, if multiple clients access the backend:
-                //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
                 .build();
 
         // (Receive idTokenString by HTTPS POST)
@@ -123,16 +108,19 @@ public class UserService {
         if (idToken != null) {
             Payload payload = idToken.getPayload();
 
-            // Print user identifier
             String userId = payload.getSubject();
+            user = new User();
+            user.googleId   = userId;
+            user.pictureUrl = (String) payload.get("picture");
+            user.username   = (String) payload.get("name");
 
-            String email = payload.getEmail();
-            boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
-            String name = (String) payload.get("name");
-            String pictureUrl = (String) payload.get("picture");
-            String locale = (String) payload.get("locale");
-            String familyName = (String) payload.get("family_name");
-            String givenName = (String) payload.get("given_name");
+            String email            = payload.getEmail();
+            boolean emailVerified   = Boolean.valueOf(payload.getEmailVerified());
+            String name             = (String) payload.get("name");
+            String pictureUrl       = (String) payload.get("picture");
+            String locale           = (String) payload.get("locale");
+            String familyName       = (String) payload.get("family_name");
+            String givenName        = (String) payload.get("given_name");
 
             System.out.println("User ID: " + userId);
             System.out.println("User ID: " + email);
@@ -149,6 +137,40 @@ public class UserService {
             System.out.println("Invalid ID token.");
             isValid = false;
         }
-        return isValid;
+        return user;
     }
+
+    public User getByGoogleId(String googleId){
+        return userRepo.findByGoogleId(googleId)   ;
+
+    }
+
+////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+
+    public List<User> getAllUsers(){
+        return userRepo.findAll();
+    }
+
+    /*public User createUser(String username ){
+        return userRepo.save(new User(username));
+    }*/
+
+    /*public User createUser(User user ){
+        return userRepo.save(user);
+    }*/
+
+    public User getByUsername(String username){
+        return userRepo.findByUsername(username);
+    }
+
+
+    public String getTime(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMM dd, HH:mm");
+        LocalDateTime now = LocalDateTime.now();
+        String s = dtf.format(now);
+        return s;
+    }
+
+
 }

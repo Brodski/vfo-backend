@@ -30,6 +30,39 @@ public class UserController {
         return msg;
     }
 
+
+    @PostMapping("/user/create")
+    public String createUser(@RequestBody String idToken) throws GeneralSecurityException, IOException {
+        System.out.println("\nGOT IT! " + idToken);
+        System.out.println("\n");
+        userService.loginUser(idToken);
+        //User user = userService.getUser(idToken);
+        return "SENDING IT! create";
+    }
+
+    @PostMapping("user/login")
+    public String loginUser(@RequestBody String idToken) throws GeneralSecurityException, IOException {
+        System.out.println("\nLoggin in user...");
+        userService.loginUser(idToken);
+        System.out.println("\nGrats, you're in");
+        return "Grats, u r in lol";
+    }
+
+
+    @PostMapping("/user/authenticate")
+    public String authenticateUser(@RequestBody String idToken) throws GeneralSecurityException, IOException {
+        System.out.println("\nGOT IT! " + idToken);
+        System.out.println("\n");
+        userService.getUser(idToken);
+
+        return "SENDING IT! auth";
+
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+
+
+
     @GetMapping(value = "/all")
     public List<User> getAll(){
         log.info("!!!! Hello 222");
@@ -41,34 +74,11 @@ public class UserController {
     public User createUser(@RequestBody User newUser){
         System.out.println("-------");
         System.out.println(newUser);
-        User u = userService.createUser(newUser);
-        System.out.println(u);
-        return u;
+        //User u = userService.createUser(newUser);
+     //   System.out.println(u);
+        return new User();
     }
 
-    @PostMapping("/user/create")
-    public String createUser(@RequestBody String idToken) throws GeneralSecurityException, IOException {
-        System.out.println("\nGOT IT! " + idToken);
-        System.out.println("\n");
-        User user = userService.getUser(idToken);
-        System.out.println("create user is null?");
-        System.out.println(user);
-        // if user is null
-        
-
-        return "SENDING IT!";
-    }
-
-
-    @PostMapping("/user/authenticate")
-    public String authenticateUser(@RequestBody String idToken) throws GeneralSecurityException, IOException {
-        System.out.println("\nGOT IT! " + idToken);
-        System.out.println("\n");
-        userService.getUser(idToken);
-
-        return "SENDING IT!";
-
-    }
 
     @PostMapping(path = "/userDebug") //, consumes = "application/x-www-form-urlencoded") //consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE )
     public ResponseEntity<String> handleRequest (RequestEntity<String> requestEntity) {
@@ -90,8 +100,8 @@ public class UserController {
     public String createAux(){
         String t = userService.getTime();
         System.out.println(t);
-        User u = userService.createUser(t);
-        return u.toString();
+        //User u = userService.createUser(t);
+        return t;
     }
 
 
