@@ -31,15 +31,19 @@ public class UserController {
     }
 
 
-    @PostMapping("/user/create")
-    public String createUser(@RequestBody String idToken) throws GeneralSecurityException, IOException {
-        System.out.println("\nGOT IT! " + idToken);
-        System.out.println("\n");
-        userService.loginUser(idToken);
-        //User user = userService.getUser(idToken);
-        return "SENDING IT! create";
+    @PostMapping("user/login")
+    public ResponseEntity<User> loginUser(@RequestBody String idToken) throws GeneralSecurityException, IOException {
+        System.out.println("\nLoggin in user...");
+        User user = userService.loginUser(idToken);
+        if (user != null) {
+            System.out.println("\nGrats, you're in");
+            return new ResponseEntity<User>(user, HttpStatus.OK);
+        }
+        return new ResponseEntity<User>(user, HttpStatus.UNAUTHORIZED);
     }
 
+
+/*
     @PostMapping("user/login")
     public String loginUser(@RequestBody String idToken) throws GeneralSecurityException, IOException {
         System.out.println("\nLoggin in user...");
@@ -47,18 +51,7 @@ public class UserController {
         System.out.println("\nGrats, you're in");
         return "Grats, u r in lol";
     }
-
-
-    @PostMapping("/user/authenticate")
-    public String authenticateUser(@RequestBody String idToken) throws GeneralSecurityException, IOException {
-        System.out.println("\nGOT IT! " + idToken);
-        System.out.println("\n");
-        userService.getUser(idToken);
-
-        return "SENDING IT! auth";
-
-    }
-
+*/
     ///////////////////////////////////////////////////////////////////////////
 
 
