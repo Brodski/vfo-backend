@@ -1,6 +1,7 @@
 package com.Brodski.restApi.Service;
 
 import com.Brodski.restApi.UserRepository.UserRepository;
+import com.Brodski.restApi.model.CustomShelf;
 import com.Brodski.restApi.model.User;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -40,27 +41,51 @@ public class UserService {
         this.userRepo = userRepository;
     }
 
+    public User saveUser(String idToken, User userReq) throws GeneralSecurityException, IOException {
+        System.out.println("INSIDE OF SAVEUSER SEVERICE");
+
+        User user = validateIdToken(idToken);
+
+        userReq.pictureUrl = user.pictureUrl;
+        userReq.googleId = user.googleId;
+        if (user != null){
+            User userInDb = userRepo.findByGoogleId(userReq.googleId);
+            System.out.println("PRE userInDb");
+            System.out.println(userInDb);
+            userInDb.setCustomShelfs(userReq.customShelfs);
+            userInDb.setPictureUrl(userReq.pictureUrl);
+            userInDb.setUsername(userReq.username);
+            System.out.println("POST userInDb");
+            System.out.println(userInDb);
+            user = userRepo.save(userInDb);
+        }
+        return user;
+
+    }
+
     public User loginUser(String id_JsonString) throws GeneralSecurityException, IOException {
         boolean isValid = false;
         String idtoken = processIdString(id_JsonString);
         User user = validateIdToken(idtoken);
-        System.out.println("loginUser : user");
+        System.out.println("loginUser :");
+        System.out.println("user");
         System.out.println(user);
         if (user != null){
             System.out.println("loginUser: USER IS VALID");
             isValid = true;
             //Check database
-            User userInDb = getByGoogleId(user.googleId);
+            User userInDb = userRepo.findByGoogleId(user.googleId);
             System.out.println("loginUser:  User after database get");
             System.out.println(userInDb);
             if (userInDb == null){
-                System.out.println("loginUser:  CREATING NEW USER! (user != null) ");
+                System.out.println("loginUser:  CREATING NEW USER! (user == null) ");
+                //user.customShelfs = new CustomShelf[]
                 userRepo.save(user);
             }
             else {
                 System.out.println("loginUser:  CREATE USER: USER ALREADY EXISTS!!");
+                user = userInDb;
             }
-            user = userInDb;
         }
         return user;
     }
@@ -83,8 +108,6 @@ public class UserService {
                  //https://stackoverflow.com/questions/2591098/how-to-parse-json-in-java
     private User validateIdToken(String idTokenString) throws GeneralSecurityException, IOException {
         boolean isValid = false;
-        System.out.println("APIKEY :" + APIKEY);
-        System.out.println("CLIENT_ID :" + CLIENT_ID);
         User user = null;
         NetHttpTransport transport = GoogleNetHttpTransport.newTrustedTransport();
         JacksonFactory jacksonFactory = new JacksonFactory();
@@ -100,9 +123,12 @@ public class UserService {
 
             String userId = payload.getSubject();
             user = new User();
-            user.googleId   = userId;
-            user.pictureUrl = (String) payload.get("picture");
-            user.username   = (String) payload.get("name");
+           // user.googleId   = userId;
+           // user.pictureUrl = (String) payload.get("picture");
+           // user.username   = (String) payload.get("name");
+            user.setGoogleId(userId);
+            user.setPictureUrl( (String) payload.get("picture"));
+            user.setUsername( (String) payload.get("name"));
 
             String email            = payload.getEmail();
             boolean emailVerified   = Boolean.valueOf(payload.getEmailVerified());
@@ -118,9 +144,6 @@ public class UserService {
             System.out.println("User ID: " + userId);
             System.out.println("User ID: " + name);
             System.out.println("User ID: " + pictureUrl);
-            System.out.println("User ID: " + locale);
-            System.out.println("User ID: " + familyName);
-            System.out.println("User ID: " + givenName);
 
         } else {
             System.out.println("Invalid ID token. idToken:");
@@ -129,10 +152,6 @@ public class UserService {
         return user;
     }
 
-    public User getByGoogleId(String googleId){
-        return userRepo.findByGoogleId(googleId)   ;
-
-    }
 
 ////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////

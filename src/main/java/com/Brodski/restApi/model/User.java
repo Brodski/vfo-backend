@@ -1,19 +1,28 @@
 package com.Brodski.restApi.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.jws.soap.SOAPBinding;
+import java.util.Arrays;
+
+@Getter @Setter
 @ToString
 @Document //tells mongodb that this object should be treated as document to be stored in collection
 public class User {
 
 
-    @Id
-    String id;
+  //  @Id
+//    String id;
     public String username;
+    @Id
     public String googleId;
     public String pictureUrl;
+    public CustomShelf[] customShelfs;
 
     public User(){}
 
@@ -25,6 +34,14 @@ public class User {
         this.googleId = googleId;
     }
 
+    public User(String username, CustomShelf[] customShelfs, String pictureUrl){
+        this.customShelfs = customShelfs;
+        this.pictureUrl = pictureUrl;
+        this.username = username;
+
+    }
+
+/*
     public String getGoogleId() { return this.googleId; }
 
     public void setGoogleId(String googleId) { this.googleId = googleId; }
@@ -44,7 +61,7 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
-
+*/
     //public String toString(){
   //      return String.format("User: username: %s, id: %s", this.username, this.id);
 //    }

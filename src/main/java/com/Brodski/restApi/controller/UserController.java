@@ -2,6 +2,9 @@ package com.Brodski.restApi.controller;
 
 import com.Brodski.restApi.Service.UserService;
 import com.Brodski.restApi.model.User;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +12,13 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.jws.soap.SOAPBinding;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController //Every function below will auto convert the data type that is being returned into JSON  //consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE )
@@ -30,6 +35,23 @@ public class UserController {
         return msg;
     }
 
+    @PostMapping("user/save")
+    public ResponseEntity<User> saveUser(@RequestBody String idTokenAndUser) throws GeneralSecurityException, IOException {
+
+        JSONObject obj = new JSONObject(idTokenAndUser);
+        JSONObject uuu = obj.getJSONObject("user");
+        String idTokenString = obj.getString("idtoken");
+        Gson gson = new Gson();
+        User user = gson.fromJson(String.valueOf(uuu), User.class);
+
+        User u = userService.saveUser(idTokenString, user);
+        if (u != null) {
+            System.out.println("\nGrats, you're in");
+            return new ResponseEntity<User>(u, HttpStatus.OK);
+        }
+        return new ResponseEntity<User>(u, HttpStatus.UNAUTHORIZED);
+
+    }
 
     @PostMapping("user/login")
     public ResponseEntity<User> loginUser(@RequestBody String idToken) throws GeneralSecurityException, IOException {
@@ -42,16 +64,6 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.UNAUTHORIZED);
     }
 
-
-/*
-    @PostMapping("user/login")
-    public String loginUser(@RequestBody String idToken) throws GeneralSecurityException, IOException {
-        System.out.println("\nLoggin in user...");
-        userService.loginUser(idToken);
-        System.out.println("\nGrats, you're in");
-        return "Grats, u r in lol";
-    }
-*/
     ///////////////////////////////////////////////////////////////////////////
 
 
@@ -74,7 +86,8 @@ public class UserController {
 
 
     @PostMapping(path = "/userDebug") //, consumes = "application/x-www-form-urlencoded") //consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE )
-    public ResponseEntity<String> handleRequest (RequestEntity<String> requestEntity) {
+    //public ResponseEntity<String> handleRequest (RequestEntity<String> requestEntity) {
+    public ResponseEntity<User> handleRequest (RequestEntity<User> requestEntity) {
 
         HttpHeaders headers = requestEntity.getHeaders();
         HttpMethod method = requestEntity.getMethod();
@@ -84,7 +97,7 @@ public class UserController {
         System.out.println("request method : " + method);
         System.out.println("request url: " + requestEntity.getUrl());
 
-        ResponseEntity<String> responseEntity = new ResponseEntity<>("my response body",
+        ResponseEntity<User> responseEntity = new ResponseEntity<>(new User(),
                 HttpStatus.OK);
         return responseEntity;
     }

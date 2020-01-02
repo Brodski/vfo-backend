@@ -30,9 +30,9 @@ class UserServiceTest {
 
     @Test
     void createUser() {
-        User user = new User("test-user");
-        user.setId("test-user-id");
-        when(userRepository.save(user)).thenReturn(user);
+    //    User user = new User("test-user");
+  //      user.setId("test-user-id");
+//        when(userRepository.save(user)).thenReturn(user);
 
 //        User savedUser = userService.createUser(user);
   //      assertEquals(user, savedUser);
