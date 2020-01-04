@@ -16,3 +16,9 @@ git reset --soft HEAD~1
 
 Go to last commit:
 git reset --hard HEAD
+
+
+Deployment notes:
+- git clone https://github.com/Brodski/restApi.git
+- install mongodb
+- install maven (if you havnt already)
