@@ -36,7 +36,7 @@ class UserServiceTest {
     @Autowired
     private UserRepository userRepository;
 
-    final private String db_integration = "IntegrationRestApi";
+    final private String db_integration = "YtUsers";
     final private String host_integration ="localhost";
 
     @BeforeAll

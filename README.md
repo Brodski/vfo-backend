@@ -22,3 +22,6 @@ Deployment notes:
 - git clone https://github.com/Brodski/restApi.git
 - install mongodb
 - install maven (if you havnt already)
+
+sudo apt install default-jdk
+wget https://download.oracle.com/otn-pub/java/jdk/13.0.1+9/cec27d702aa74d5a8630c65ae61e4305/jdk-13.0.1_linux-x64_bin.rpm
