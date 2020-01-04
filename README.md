@@ -25,3 +25,13 @@ Deployment notes:
 
 sudo apt install default-jdk
 wget https://download.oracle.com/otn-pub/java/jdk/13.0.1+9/cec27d702aa74d5a8630c65ae61e4305/jdk-13.0.1_linux-x64_bin.rpm
+
+works on aws's free tier RHEL
+
+NAME="Red Hat Enterprise Linux"
+VERSION="8.0 (Ootpa)"
+ID="rhel"
+ID_LIKE="fedora"
+VERSION_ID="8.0"
+PLATFORM_ID="platform:el8"
+PRETTY_NAME="Red Hat Enterprise Linux 8.0 (Ootpa)"
