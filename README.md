@@ -35,5 +35,9 @@ ID_LIKE="fedora"
 VERSION_ID="8.0"
 PLATFORM_ID="platform:el8"
 PRETTY_NAME="Red Hat Enterprise Linux 8.0 (Ootpa)"
-  
+
 jenkins http://ec2-52-15-87-113.us-east-2.compute.amazonaws.com:9788/github-webhook/ (push)
+
+ ls /home/ec2-user/.jenkins/workspace/ApiServer/
+
+ lol, jenkins build plz
