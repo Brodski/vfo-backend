@@ -20,7 +20,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:80", "http://ec2-18-223-110-163.us-east-2.compute.amazonaws.com:80", "http://ec2-18-223-110-163.us-east-2.compute.amazonaws.com"})
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:80", "http://ec2-13-58-218-10.us-east-2.compute.amazonaws.com:80", "http://ec2-13-58-218-10.us-east-2.compute.amazonaws.com"})
 @RestController //Every function below will auto convert the data type that is being returned into JSON  //consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE )
 public class UserController {
 
