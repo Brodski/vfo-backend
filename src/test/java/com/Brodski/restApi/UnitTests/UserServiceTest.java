@@ -25,21 +25,16 @@ class UserServiceTest {
     @Test
     void getAllUsers() {
         System.out.println(userService.getAllUsers());
-        System.out.println(userService.getTime());
     }
 
     @Test
     void createUser() {
-    //    User user = new User("test-user");
-  //      user.setId("test-user-id");
+//        User user = new User("test-user");
+//        user.setId("test-user-id");
 //        when(userRepository.save(user)).thenReturn(user);
-
+//
 //        User savedUser = userService.createUser(user);
-  //      assertEquals(user, savedUser);
-        assertEquals(1,1);
+//        assertEquals(user, savedUser);
     }
 
-    @Test
-    void getTime() {
-    }
 }

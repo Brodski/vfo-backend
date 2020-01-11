@@ -39,55 +39,42 @@ class UserServiceTest {
     final private String db_integration = "YtUsers";
     final private String host_integration ="localhost";
 
-    @BeforeAll
-    public void init(){
-        System.out.println(userService.getTime());
-        if ( !isCorrectDatabase() ){
-            System.out.println("Exiting b/c wrong database");
-            System.exit(0);
-        }
-        //Add shit
-        if ( isCorrectDatabase() && userRepository.existsById("my-semi-secure-id-dude-Relight-My-Fire") ) {
-            userRepository.deleteAll();
-        }
-        for (int i = 0; i < 5; i++) {
-            User u = new User("UserDude " + i, "id-" + i);
-            userRepository.save(u);
-        }
-    }
-    @AfterAll
-    public void cleanUpRepo(){
-        User u = new User("UserDude", "my-semi-secure-id-dude-Relight-My-Fire");
-        userRepository.save(u);
-    }
-
-    @Test
-    void getAllUsers() {
-
-        List<User> uList =  userService.getAllUsers();
-        for (User u : uList){
-            System.out.println(u);
-        }
-        //userRepository.findById("id-0").ifPresent();
-        //assertEquals(5, uList.size());
-        assertTrue(userRepository.findById("id-0").isPresent());
-        assertTrue(userRepository.findById("id-1").isPresent());
-        assertTrue(userRepository.findById("id-2").isPresent());
-        assertTrue(userRepository.findById("id-3").isPresent());
-        assertTrue(userRepository.findById("id-4").isPresent());
-    }
-
-    @Test
-    void createUser() {
-    }
-
-    @Test
-    void testCreate() {
-    }
-
-    @Test
-    void getTime() {
-    }
+//    @BeforeAll
+//    public void init(){
+//        if ( !isCorrectDatabase() ){
+//            System.out.println("Exiting b/c wrong database");
+//            System.exit(0);
+//        }
+//        //Add shit
+//        if ( isCorrectDatabase() && userRepository.existsById("my-semi-secure-id-dude-Relight-My-Fire") ) {
+//            userRepository.deleteAll();
+//        }
+//        for (int i = 0; i < 5; i++) {
+//            User u = new User("UserDude " + i, "id-" + i);
+//            userRepository.save(u);
+//        }
+//    }
+//    @AfterAll
+//    public void cleanUpRepo(){
+//        User u = new User("UserDude", "my-semi-secure-id-dude-Relight-My-Fire");
+//        userRepository.save(u);
+//    }
+//
+//    @Test
+//    void getAllUsers() {
+//
+//        List<User> uList =  userService.getAllUsers();
+//        for (User u : uList){
+//            System.out.println(u);
+//        }
+//        //userRepository.findById("id-0").ifPresent();
+//        //assertEquals(5, uList.size());
+//        assertTrue(userRepository.findById("id-0").isPresent());
+//        assertTrue(userRepository.findById("id-1").isPresent());
+//        assertTrue(userRepository.findById("id-2").isPresent());
+//        assertTrue(userRepository.findById("id-3").isPresent());
+//        assertTrue(userRepository.findById("id-4").isPresent());
+//    }
 
     boolean isCorrectDatabase(){
         boolean isCorrect = true;

@@ -11,34 +11,15 @@
 ### Go to last commit:
 ###     git reset --hard HEAD
 ###
-###
-###
-###
-
-###
-###
-./src/main/java/com/Brodski/restApi/SecretKeys.java
-/src/main/java/com/Brodski/restApi/SecretKeys.java
-src/main/java/com/Brodski/restApi/SecretKeys.java
-src/main/java/com/Brodski/restApi/SecretKeys*
-src/main/java/com/Brodski/restApi/Secret*
 
 
-.\src\main\java\com\Brodski\restApi\SecretKeyz.java
-\src\main\java\com\Brodski\restApi\SecretKeyz.java
-src\main\java\com\Brodski\restApi\SecretKeyz.java
-
-src/main/java/com/Brodski/restApi/SecretKeyz.java
-src/main/java/com/Brodski/restApi/SecretKeyz.java
-src/main/java/com/Brodski/restApi/SecretKeys.java
-SecretKeys.java
-
+**/ActualSecretKeys.java
 
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**
-!**/src/test/**
+#!**/src/main/**
+#!**/src/test/**
 
 ### STS ###
 .apt_generated

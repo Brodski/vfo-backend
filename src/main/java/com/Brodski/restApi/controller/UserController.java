@@ -11,17 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
-
-import javax.jws.soap.SOAPBinding;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.Map;
 
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:80", "http://ec2-13-58-218-10.us-east-2.compute.amazonaws.com:80", "http://ec2-13-58-218-10.us-east-2.compute.amazonaws.com", "http://ec2-18-224-183-225.us-east-2.compute.amazonaws.com"})
-@RestController //Every function below will auto convert the data type that is being returned into JSON  //consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE )
+
+
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:80", "http://ec2-13-58-218-10.us-east-2.compute.amazonaws.com:80", "http://ec2-13-58-218-10.us-east-2.compute.amazonaws.com",})
+@RestController
 public class UserController {
 
     private Logger log = LoggerFactory.getLogger(UserController.class);
@@ -39,78 +36,35 @@ public class UserController {
     public ResponseEntity<User> saveUser(@RequestBody String idTokenAndUser) throws GeneralSecurityException, IOException {
 
         JSONObject obj = new JSONObject(idTokenAndUser);
-        JSONObject uuu = obj.getJSONObject("user");
+        JSONObject userFromClientJson = obj.getJSONObject("user");
         String idTokenString = obj.getString("idtoken");
         Gson gson = new Gson();
-        User user = gson.fromJson(String.valueOf(uuu), User.class);
+        User userFromClient = gson.fromJson(String.valueOf(userFromClientJson), User.class);
 
-        User u = userService.saveUser(idTokenString, user);
+        User u = userService.saveUser(idTokenString, userFromClient);
         if (u != null) {
-            System.out.println("\nGrats, you're in");
+            log.info("User save successful!");
             return new ResponseEntity<User>(u, HttpStatus.OK);
         }
+        log.info("User save unauthorized");
         return new ResponseEntity<User>(u, HttpStatus.UNAUTHORIZED);
 
     }
 
     @PostMapping("user/login")
     public ResponseEntity<User> loginUser(@RequestBody String idToken) throws GeneralSecurityException, IOException {
-        System.out.println("\nLoggin in user...");
         User user = userService.loginUser(idToken);
         if (user != null) {
-            System.out.println("\nGrats, you're in");
+            log.info("User login successful!");
             return new ResponseEntity<User>(user, HttpStatus.OK);
         }
+        log.info("User login unauthorized!");
         return new ResponseEntity<User>(user, HttpStatus.UNAUTHORIZED);
     }
 
-    ///////////////////////////////////////////////////////////////////////////
-
-
-
     @GetMapping(value = "/all")
     public List<User> getAll(){
-        log.info("!!!! Hello 222");
         return userService.getAllUsers();
     }
-
-    //if user.id==null or not null, the magic of Spring will create an ID for us
-    @RequestMapping("/createUser")
-    public User createUser(@RequestBody User newUser){
-        System.out.println("-------");
-        System.out.println(newUser);
-        //User u = userService.createUser(newUser);
-     //   System.out.println(u);
-        return new User();
-    }
-
-
-    @PostMapping(path = "/userDebug") //, consumes = "application/x-www-form-urlencoded") //consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE )
-    //public ResponseEntity<String> handleRequest (RequestEntity<String> requestEntity) {
-    public ResponseEntity<User> handleRequest (RequestEntity<User> requestEntity) {
-
-        HttpHeaders headers = requestEntity.getHeaders();
-        HttpMethod method = requestEntity.getMethod();
-
-        System.out.println("request body : " + requestEntity.getBody());
-        System.out.println("request headers : " + headers);
-        System.out.println("request method : " + method);
-        System.out.println("request url: " + requestEntity.getUrl());
-
-        ResponseEntity<User> responseEntity = new ResponseEntity<>(new User(),
-                HttpStatus.OK);
-        return responseEntity;
-    }
-
-    @RequestMapping("/create2")
-    public String createAux(){
-        String t = userService.getTime();
-        System.out.println(t);
-        //User u = userService.createUser(t);
-        return t;
-    }
-
-
-
 }
 
