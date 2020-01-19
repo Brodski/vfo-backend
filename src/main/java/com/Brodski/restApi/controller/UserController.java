@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;ttp://ec2-13-58-218-10.us-east-2.compute.amazonaws.com
+import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
 
