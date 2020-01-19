@@ -11,13 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
+import java.io.IOException;ttp://ec2-13-58-218-10.us-east-2.compute.amazonaws.com
 import java.security.GeneralSecurityException;
 import java.util.List;
 
 
 
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:80", "http://ec2-13-58-218-10.us-east-2.compute.amazonaws.com:80", "http://ec2-13-58-218-10.us-east-2.compute.amazonaws.com",})
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:80", "http://ec2-13-58-218-10.us-east-2.compute.amazonaws.com:80", "http://ec2-13-58-218-10.us-east-2.compute.amazonaws.com"})
 @RestController
 public class UserController {
 
