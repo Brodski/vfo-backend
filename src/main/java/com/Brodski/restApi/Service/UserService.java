@@ -27,8 +27,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.json.jackson2.JacksonFactory;
 
 
-//TODO:
-// Research how to secure apikey
+//TODO:  Research how to secure apikey
 
 @Service
 public class UserService {
@@ -77,8 +76,8 @@ public class UserService {
     }
 
     // oauth library
-    // GUIDE: https://developers.google.com/identity/sign-in/web/listeners
-    // API: https://googleapis.dev/java/google-api-services-oauth2/latest/index.html
+    // GUIDE: https://developers.google.com/identity/sign-in/web/backend-auth
+    // DOCS: https://googleapis.dev/java/google-api-services-oauth2/latest/index.html
     // JSON stuff https://stackoverflow.com/questions/2591098/how-to-parse-json-in-java
     private User validateIdToken(String idTokenString) throws GeneralSecurityException, IOException {
 
@@ -103,8 +102,6 @@ public class UserService {
             String name             = (String) payload.get("name");
             log.info("User " + name + " verified by Google Auth.");
 
-//            System.out.println("User ID: " + userId);
-//            System.out.println("User ID: " + name);
         } else {
             log.info("Invalid ID token");
         }
