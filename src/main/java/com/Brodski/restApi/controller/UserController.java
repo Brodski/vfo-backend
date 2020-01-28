@@ -17,7 +17,7 @@ import java.util.List;
 
 
 
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:80", "http://betteryoutube.dns-cloud.net","http://betteryoutube.dns-cloud.net:80"})
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:80", "http://betteryoutube.dns-cloud.net","http://betteryoutube.dns-cloud.net:80", "https://brodski.github.io"})
 @RestController
 public class UserController {
 
