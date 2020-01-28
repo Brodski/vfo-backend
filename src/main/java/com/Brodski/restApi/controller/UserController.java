@@ -55,7 +55,6 @@ public class UserController {
     public ResponseEntity<User> loginUser(@RequestBody String idToken) throws GeneralSecurityException, IOException {
         User user = userService.loginUser(idToken);
         if (user != null) {
-            log.info("User login successful!");
             return new ResponseEntity<User>(user, HttpStatus.OK);
         }
         log.info("User login unauthorized!");
