@@ -1,1 +1,1 @@
-See readme of the [https://github.com/Brodski/customyoutube-frontend](client repo)
+See readme of the [client repo](https://github.com/Brodski/customyoutube-frontend)
