@@ -15,9 +15,13 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
 
-
-
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:80", "http://betteryoutube.dns-cloud.net","http://betteryoutube.dns-cloud.net:80", "https://brodski.github.io"})
+@CrossOrigin(origins = {"http://localhost:3000",
+                        "http://localhost:80",
+                        "http://betteryoutube.dns-cloud.net",
+                        "http://betteryoutube.dns-cloud.net:80",
+                        "http://customyoutube.com",
+                        "https://customyoutube.com"
+                        })
 @RestController
 public class UserController {
 
@@ -53,6 +57,8 @@ public class UserController {
 
     @PostMapping("user/login")
     public ResponseEntity<User> loginUser(@RequestBody String idToken) throws GeneralSecurityException, IOException {
+        log.info("idToken");
+        log.info(idToken);
         User user = userService.loginUser(idToken);
         if (user != null) {
             return new ResponseEntity<User>(user, HttpStatus.OK);
