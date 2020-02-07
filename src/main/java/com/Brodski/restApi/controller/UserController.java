@@ -57,8 +57,6 @@ public class UserController {
 
     @PostMapping("user/login")
     public ResponseEntity<User> loginUser(@RequestBody String idToken) throws GeneralSecurityException, IOException {
-        log.info("idToken");
-        log.info(idToken);
         User user = userService.loginUser(idToken);
         if (user != null) {
             return new ResponseEntity<User>(user, HttpStatus.OK);
