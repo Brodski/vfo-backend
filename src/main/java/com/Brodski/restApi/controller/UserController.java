@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.Brodski.restApi.ActualSecretKeys.DB_ALL;
 
 @CrossOrigin(origins = {"http://localhost:3000",
                         "http://localhost:80",
@@ -65,9 +68,19 @@ public class UserController {
         return new ResponseEntity<User>(user, HttpStatus.UNAUTHORIZED);
     }
 
-    @GetMapping(value = "/all")
-    public List<User> getAll(){
-        return userService.getAllUsers();
+    // There is not any sensitive data in the database. This is safe. Worst case, it's exposed yet it is still safe.
+    @RequestMapping(value = "/all")
+    public List<User> getAll(@RequestParam(value="secret") String db){
+        if (db.equals(DB_ALL)){
+            log.info("WELCOME TO /ALL YOU PASSED!");
+            return userService.getAllUsers();
+        }
+        else {
+            log.info("WELCOME TO /ALL YOU FAILED!");
+            List<User> idk = new ArrayList<>();
+            return idk;
+        }
+
     }
 }
 
