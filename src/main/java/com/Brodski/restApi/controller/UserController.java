@@ -69,6 +69,8 @@ public class UserController {
     }
 
     // There is not any sensitive data in the database. This is safe. Worst case, it's exposed yet it is still safe.
+    //
+    // I know that this is not secure! It's bad. (no sensitive data though, it's lazy admin info)
     @RequestMapping(value = "/all")
     public List<User> getAll(@RequestParam(value="secret") String db){
         if (db.equals(DB_ALL)){
