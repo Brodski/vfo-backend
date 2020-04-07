@@ -41,6 +41,18 @@ public class UserService {
         this.userRepo = userRepository;
     }
 
+    public boolean deleteUser(String idToken, User userReq) throws GeneralSecurityException, IOException {
+        User user = validateIdToken(idToken);
+        log.info("Deleting");
+        log.info(user.googleId);
+        if (user != null) {
+            // if the googleId doesn't exist in database then that means "deleting", ie removing user data from db, is a success
+            userRepo.deleteUserByGoogleId(user.googleId);
+            return true;
+        }
+        return false;
+    }
+
     public User saveUser(String idToken, User userReq) throws GeneralSecurityException, IOException {
         User user = validateIdToken(idToken);
         userReq.pictureUrl = user.pictureUrl;

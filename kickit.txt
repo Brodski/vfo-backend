@@ -1,0 +1,15 @@
+#################################
+	SPIRNGBOOT
+
+mvn spring-boot:run -Dprofiles=dev
+
+################################## 
+	Go to last commit
+	Go to last commit
+	Go to last commit
+	
+Undo last commit but keep local changes:
+git reset --soft HEAD~1
+
+Go to last commit:
+git reset --hard HEAD

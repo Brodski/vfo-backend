@@ -39,6 +39,36 @@ public class UserController {
         return msg;
     }
 
+//    private User parseData(String idTokenAndUser){
+//        JSONObject obj = new JSONObject(idTokenAndUser);
+//        JSONObject userFromClientJson = obj.getJSONObject("user");
+//        String idTokenString = obj.getString("idtoken");
+//        Gson gson = new Gson();
+//        User userFromClient = gson.fromJson(String.valueOf(userFromClientJson), User.class);
+//        return userFromClient;
+//    }
+
+    @PostMapping("user/delete")
+    public ResponseEntity<User> deleteUser(@RequestBody String idTokenAndUser) throws GeneralSecurityException, IOException {
+        log.info("TOP OF DLETE");
+        log.info(idTokenAndUser);
+        JSONObject obj = new JSONObject(idTokenAndUser);
+        JSONObject userFromClientJson = obj.getJSONObject("user");
+        String idTokenString = obj.getString("idtoken");
+        log.info("TOP OF idTokenString");
+        log.info(idTokenString);
+        Gson gson = new Gson();
+        User userFromClient = gson.fromJson(String.valueOf(userFromClientJson), User.class);
+
+        boolean isPass = userService.deleteUser(idTokenString, userFromClient);
+        if (isPass) {
+            log.info("User delete successful!");
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        log.info("User delete unsuccessful :(");
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
     @PostMapping("user/save")
     public ResponseEntity<User> saveUser(@RequestBody String idTokenAndUser) throws GeneralSecurityException, IOException {
 
