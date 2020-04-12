@@ -50,13 +50,9 @@ public class UserController {
 
     @PostMapping("user/delete")
     public ResponseEntity<User> deleteUser(@RequestBody String idTokenAndUser) throws GeneralSecurityException, IOException {
-        log.info("TOP OF DLETE");
-        log.info(idTokenAndUser);
         JSONObject obj = new JSONObject(idTokenAndUser);
         JSONObject userFromClientJson = obj.getJSONObject("user");
         String idTokenString = obj.getString("idtoken");
-        log.info("TOP OF idTokenString");
-        log.info(idTokenString);
         Gson gson = new Gson();
         User userFromClient = gson.fromJson(String.valueOf(userFromClientJson), User.class);
 
