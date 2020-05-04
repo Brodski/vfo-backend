@@ -21,7 +21,7 @@ import static com.Brodski.restApi.ActualSecretKeys.DB_ALL;
 @CrossOrigin(origins = {"http://localhost:3000",
                         "http://localhost:80",
                         "http://videofeedorganizer.com",
-                        "https://videofeedorganzier.com",
+                        "https://videofeedorganizer.com",
                         "http://customyoutube.com",
                         "https://customyoutube.com"
                         })
@@ -100,11 +100,11 @@ public class UserController {
     @RequestMapping(value = "/all")
     public List<User> getAll(@RequestParam(value="secret") String db){
         if (db.equals(DB_ALL)){
-            log.info("WELCOME TO /ALL YOU PASSED!");
+            log.info("/all accessed!");
             return userService.getAllUsers();
         }
         else {
-            log.info("WELCOME TO /ALL YOU FAILED!");
+            log.info("/all deined");
             List<User> idk = new ArrayList<>();
             return idk;
         }

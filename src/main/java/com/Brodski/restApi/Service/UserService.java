@@ -69,7 +69,6 @@ public class UserService {
 
     public User loginUser(String id_JsonString) throws GeneralSecurityException, IOException {
         String idtoken = processIdString(id_JsonString);
-        log.info("Logging in User");
         User user = validateIdToken(idtoken);
         if (user != null){
             User userInDb = userRepo.findByGoogleId(user.googleId);
@@ -94,8 +93,6 @@ public class UserService {
     // DOCS: https://googleapis.dev/java/google-api-services-oauth2/latest/index.html
     // JSON stuff https://stackoverflow.com/questions/2591098/how-to-parse-json-in-java
     private User validateIdToken(String idTokenString) throws GeneralSecurityException, IOException {
-        log.info("idTokenString");
-        log.info(idTokenString);
         User user = null;
         NetHttpTransport transport = GoogleNetHttpTransport.newTrustedTransport();
         JacksonFactory jacksonFactory = new JacksonFactory();
@@ -106,7 +103,6 @@ public class UserService {
         // (Receive idTokenString by HTTPS POST)
         GoogleIdToken idToken = verifier.verify(idTokenString); 
         if (idToken != null) {
-            log.info("GoogleIdToken is not null");
             Payload payload = idToken.getPayload();
 
             String userId = payload.getSubject();
