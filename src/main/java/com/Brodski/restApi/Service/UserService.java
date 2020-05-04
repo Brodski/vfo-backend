@@ -102,7 +102,7 @@ public class UserService {
                 .build();
 
         // (Receive idTokenString by HTTPS POST)
-        GoogleIdToken idToken = verifier.verify(idTokenString);
+        GoogleIdToken idToken = verifier.verify(idTokenString); 
         if (idToken != null) {
             Payload payload = idToken.getPayload();
 

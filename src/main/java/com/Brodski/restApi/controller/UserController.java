@@ -20,8 +20,8 @@ import static com.Brodski.restApi.ActualSecretKeys.DB_ALL;
 
 @CrossOrigin(origins = {"http://localhost:3000",
                         "http://localhost:80",
-                        "http://betteryoutube.dns-cloud.net",
-                        "http://betteryoutube.dns-cloud.net:80",
+                        "http://videofeedorganizer.com",
+                        "https://videofeedorganzier.com",
                         "http://customyoutube.com",
                         "https://customyoutube.com"
                         })
