@@ -23,7 +23,9 @@ import static com.Brodski.restApi.ActualSecretKeys.DB_ALL;
                         "http://videofeedorganizer.com",
                         "https://videofeedorganizer.com",
                         "http://customyoutube.com",
-                        "https://customyoutube.com"
+                        "https://customyoutube.com",
+                        "http://vfo.one",
+                        "https://vfo.one",
                         })
 @RestController
 public class UserController {
